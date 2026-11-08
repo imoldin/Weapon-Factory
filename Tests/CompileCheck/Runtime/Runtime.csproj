@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Type-checks every runtime script against Unity reference assemblies (no Unity install needed). -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>WeaponFactory.CompileCheck</AssemblyName>
+    <DefineConstants>UNITY_2021_3_OR_NEWER</DefineConstants>
+    <NoWarn>CS0649</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../UGuiStub.cs" />
+    <Compile Include="../../../Assets/_Project/Scripts/**/*.cs" />
+    <Reference Include="$(UnityModules)/*.dll" Private="false" />
+  </ItemGroup>
+</Project>
