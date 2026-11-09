@@ -57,6 +57,7 @@ namespace WeaponFactory.UI
             scaler.referenceResolution = ReferenceResolution;
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             scaler.matchWidthOrHeight = 0.35f; // favour width on tall phones
+            go.AddComponent<AdaptiveCanvasScaler>(); // switches to height matching on wide screens
             go.AddComponent<GraphicRaycaster>();
             var safe = new GameObject("SafeArea", typeof(RectTransform));
             safe.transform.SetParent(go.transform, false);
