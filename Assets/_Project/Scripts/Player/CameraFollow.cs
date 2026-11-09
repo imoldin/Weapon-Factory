@@ -74,8 +74,9 @@ namespace WeaponFactory.Player
             Vector3 tp = target.position;
             if (mode == CameraMode.Arena)
             {
-                pos = new Vector3(tp.x * 0.35f, tp.y + 8.2f, tp.z - 7.6f);
-                look = new Vector3(tp.x * 0.25f, 0f, _arenaFocus.z - 3f);
+                // further back and lower: stays under the ceiling girders and keeps the weapon above the HUD
+                pos = new Vector3(tp.x * 0.35f, tp.y + 7.0f, tp.z - 10f);
+                look = new Vector3(tp.x * 0.25f, 0f, _arenaFocus.z - 9f);
             }
             else if (mode == CameraMode.Showcase)
             {

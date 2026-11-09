@@ -183,7 +183,7 @@ namespace WeaponFactory.Levels
             }
 
             // overhead girders (also make the space read as indoor factory)
-            for (float z = 0f; z < endZ; z += 16f)
+            for (float z = 0f; z < endZ - 24f; z += 16f) // none near the arena: the arena camera sits higher
             {
                 Shapes.Box(stat, new Vector3(0f, 9f, z), new Vector3(21f, 0.5f, 0.6f), trimMat, "Girder");
                 Shapes.Box(stat, new Vector3(0f, 8.6f, z), new Vector3(3f, 0.25f, 0.4f), GameAssets.Glow(pal.light, 1.4f), "Lamp");
@@ -350,8 +350,9 @@ namespace WeaponFactory.Levels
             // arena entrance arch
             Shapes.Box(stat, new Vector3(-ArenaHalfWidth - 1.5f, 3f, startZ), new Vector3(1.4f, 6f, 1.2f), GameAssets.Lit(pal.wallTrim), "ArchL", true);
             Shapes.Box(stat, new Vector3(ArenaHalfWidth + 1.5f, 3f, startZ), new Vector3(1.4f, 6f, 1.2f), GameAssets.Lit(pal.wallTrim), "ArchR", true);
-            Shapes.Box(stat, new Vector3(0f, 6.4f, startZ), new Vector3(ArenaHalfWidth * 2f + 4.4f, 0.9f, 1.2f), GameAssets.Lit(pal.wallTrim), "ArchTop", true);
-            Shapes.Box(stat, new Vector3(0f, 6.4f, startZ - 0.62f), new Vector3(ArenaHalfWidth * 2f + 3f, 0.25f, 0.05f), GameAssets.Glow(pal.accent, 2.2f), "ArchGlow");
+            // (no top beam: it would block the arena camera's view)
+            Shapes.Box(stat, new Vector3(-ArenaHalfWidth - 0.78f, 3f, startZ), new Vector3(0.05f, 5.6f, 0.3f), GameAssets.Glow(pal.accent, 2.2f), "ArchGlowL");
+            Shapes.Box(stat, new Vector3(ArenaHalfWidth + 0.78f, 3f, startZ), new Vector3(0.05f, 5.6f, 0.3f), GameAssets.Glow(pal.accent, 2.2f), "ArchGlowR");
         }
 
         /// <summary>Main menu backdrop: a short section of factory with machinery, conveyors and lights.</summary>
