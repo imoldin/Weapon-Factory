@@ -127,12 +127,22 @@ namespace WeaponFactory.Core
         /// </summary>
         public static void RemoveForeignSceneObjects()
         {
-            foreach (var cam in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))
-                if (cam.GetComponentInParent<GameManager>() == null) Object.DestroyImmediate(cam.gameObject);
-            foreach (var light in Object.FindObjectsByType<Light>(FindObjectsSortMode.None))
-                if (light.type == LightType.Directional && light.GetComponentInParent<GameManager>() == null) Object.DestroyImmediate(light.gameObject);
-            foreach (var es in Object.FindObjectsByType<UnityEngine.EventSystems.EventSystem>(FindObjectsSortMode.None))
-                Object.DestroyImmediate(es.gameObject);
+            // Walk the active scene's roots (avoids FindObjectsByType, whose sort-mode overload is obsolete in Unity 6.x).
+            var roots = SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach (var root in roots)
+            {
+                if (root == null) continue;
+                foreach (var cam in root.GetComponentsInChildren<Camera>(true))
+                    if (cam != null) Object.DestroyImmediate(cam.gameObject);
+            }
+            foreach (var root in roots)
+            {
+                if (root == null) continue;
+                foreach (var light in root.GetComponentsInChildren<Light>(true))
+                    if (light != null && light.type == LightType.Directional) Object.DestroyImmediate(light.gameObject);
+                foreach (var es in root.GetComponentsInChildren<UnityEngine.EventSystems.EventSystem>(true))
+                    if (es != null) Object.DestroyImmediate(es.gameObject);
+            }
         }
     }
 }

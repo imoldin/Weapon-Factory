@@ -139,12 +139,12 @@ namespace WeaponFactory.Utilities
         }
 
         /// <summary>Quick "pop" — scales up then back to the original scale.</summary>
-        static readonly Dictionary<int, Vector3> _punchRest = new Dictionary<int, Vector3>();
+        static readonly Dictionary<Transform, Vector3> _punchRest = new Dictionary<Transform, Vector3>();
 
         public static int Punch(Transform t, float amount = 0.2f, float duration = 0.25f, bool unscaled = false)
         {
             Kill(t);
-            int key = t.GetInstanceID();
+            Transform key = t; // keyed by reference (GetInstanceID is obsolete in Unity 6.x)
             Vector3 baseScale;
             // re-punching mid-animation must not inflate the rest scale
             if (!_punchRest.TryGetValue(key, out baseScale)) { baseScale = t.localScale; _punchRest[key] = baseScale; }
