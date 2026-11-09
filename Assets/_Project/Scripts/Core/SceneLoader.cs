@@ -108,8 +108,10 @@ namespace WeaponFactory.Core
     {
         public static void Ensure(Scene scene)
         {
-            if (Object.FindFirstObjectByType<MainMenuBootstrap>() != null) return;
-            if (Object.FindFirstObjectByType<GameplayBootstrap>() != null) return;
+            if (scene.IsValid() && scene.isLoaded)
+                foreach (var root in scene.GetRootGameObjects())
+                    if (root.GetComponentInChildren<MainMenuBootstrap>(true) != null || root.GetComponentInChildren<GameplayBootstrap>(true) != null)
+                        return;
             bool gameplay = scene.name.Contains("Gameplay");
             Spawn(gameplay ? GameScene.Gameplay : GameScene.MainMenu);
         }
